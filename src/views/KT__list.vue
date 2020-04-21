@@ -2,8 +2,9 @@
   <div>
     <h1 style="text-align:center">黑体辐射源智能校准系统kt15配置系统</h1>
 
-    <a-button class="editable-add-btn" @click="handleAdd">添加新方案</a-button>
-    <a-button class="editable-add-btn" @click="back">返回</a-button>
+    
+     <el-button class="editable-add-btn" @click="back" type="warning">返回</el-button>
+     <el-button class="editable-add-btn" @click="handleAdd" type="primary">添加新方案</el-button>
 
     <a-table bordered :dataSource="data" :columns="columns">
       <template slot="name" slot-scope="text, record">
@@ -11,7 +12,8 @@
       </template>
       <template slot="operation" slot-scope="text, record">
         
-        <a-button type='danger' @click="Edit(record)">修改</a-button>
+        
+        <el-button type="danger" @click="Edit(record)">修改</el-button>
       </template> 
       <template slot="chack"  slot-scope="text, record">
         
@@ -34,7 +36,7 @@
     },
     data() {
       return {
-        URL:"http://localhost:8080/autotest",
+        URL:"http://192.168.4.221:8080/autotest",
         data: [
           
         ],

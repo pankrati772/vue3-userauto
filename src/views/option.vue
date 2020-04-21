@@ -1,6 +1,7 @@
 <template>
 
 <div class="optionFrom">
+<h1>黑体辐射源智能校准系统方案配置系统</h1>
     <a-form :layout="formLayout" :model="msg" >
     
         <a-form-item
@@ -66,13 +67,8 @@
         <a-input placeholder="" v-model='msg.arrangeValue' />
         </a-form-item>
         <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
-        <a-button type="primary" @click="pull">
-            保存方案
-        </a-button>
-        
-        <a-button type="danger" @click="back">
-            返回列表页
-        </a-button>
+        <el-button type="primary" @click="pull">保存方案</el-button>
+        <el-button type="danger"  @click="back">返回列表页</el-button>
         </a-form-item>
     </a-form>
     
@@ -135,7 +131,7 @@ export default {
     pull(){
         console.log(this.msg)
         
-        axios.post('http://192.168.4.77:8080/autotest/plan/insterPlan',this.msg).then((data)=>{
+        axios.post('http://192.168.4.221:8080/autotest/plan/insterPlan',this.msg).then((data)=>{
             console.log(data)
             if(data.status===200){
                 this.msg={
@@ -175,6 +171,6 @@ export default {
 <style scoped lang="scss">
 .optionFrom{
     width:800px;
-    margin:0 auto;
+    margin:0 38%;
 }
 </style>

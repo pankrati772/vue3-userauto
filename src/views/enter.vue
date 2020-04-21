@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 export default {
     data(){
         return{
@@ -25,6 +26,9 @@ export default {
         ktplan(){
             this.$router.push('/Kt__list')
         }
+    },
+    mounted(){
+        console.log(this.$store.state)
     }
 }
 </script>

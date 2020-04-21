@@ -1,6 +1,8 @@
 <template>
 
 <div class="optionFrom">
+    
+
     <a-form :layout="formLayout" :model="msg" >
     
         <a-form-item
@@ -9,7 +11,7 @@
         :wrapper-col="formItemLayout.wrapperCol"
         
         >
-        <a-input placeholder="请输入方案名称" disabled   v-model='msg.name' />
+        <a-input placeholder="请输入发射率" disabled   v-model='msg.name' />
         </a-form-item>
         <a-form-item
         label="发射率"
@@ -17,7 +19,7 @@
         :wrapper-col="formItemLayout.wrapperCol"
         
         >
-        <a-input placeholder="请输入方案名称"  v-model='msg.emissing' />
+        <a-input placeholder="请输入发射率"  v-model='msg.emissing' />
         </a-form-item>
         <a-form-item
         label="设备间距"
@@ -25,7 +27,7 @@
         :wrapper-col="formItemLayout.wrapperCol"
         
         >
-        <a-input placeholder="请输入方案名称"  v-model='msg.spacing' />
+        <a-input placeholder="请输入设备间距"  v-model='msg.spacing' />
         </a-form-item>
 
         <h3>温度设置</h3>
@@ -48,13 +50,10 @@
         </a-form-item>
        
         <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
-        <a-button type="primary" @click="pull">
-            保存方案
-        </a-button>
         
-        <a-button type="danger" @click="back">
-            返回列表页
-        </a-button>
+        <el-button type="primary" @click="pull">保存方案</el-button>
+        <el-button type="danger"  @click="back">返回列表页</el-button>
+        
         </a-form-item>
     </a-form>
     
@@ -77,7 +76,7 @@ export default {
               
           ]
       }
-      ,UTL:'http://localhost:8080/autotest'
+      ,UTL:'http://192.168.4.221:8080/autotest'
     };
   },
   computed: {
@@ -133,8 +132,26 @@ export default {
         axios.post(this.UTL+'/ktDevice/updateDeviation',{"devicationArray":this.msg.domains}).then((data)=>{
             console.log(data)
             if(data.status===200){
-                alert('数据更新成功')
-                 this.$router.push('/Kt_list')
+                // alert('数据更新成功')
+                axios.post(this.UTL+'/ktDevice/updateKtDevice',this.msg).then((data)=>{
+                  console.log(data)
+                  if(data.status===200){
+                    this.$message({
+                      message: '数据更新成功',
+                      type: 'success'
+                    });
+                //  this.$router.push('/Kt__list')
+                setTimeout(this.$router.push('/Kt__list'),1000)
+
+                  }else{
+              this.$message.error('KT数据更新失败');
+
+                  }
+                }) 
+                
+            }
+            else{
+              this.$message.error('温度数据更新失败');
             }
             
             
@@ -163,7 +180,7 @@ export default {
 <style scoped lang="scss">
 .optionFrom{
     width:800px;
-    margin:0 auto;
+    margin:0 35%;
 }
 .changenum:hover{
     border-color: #40a9ff;

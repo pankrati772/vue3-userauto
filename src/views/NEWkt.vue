@@ -48,13 +48,8 @@
         </a-form-item>
        
         <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
-        <a-button type="primary" @click="pull">
-            保存方案
-        </a-button>
-        
-        <a-button type="danger" @click="back">
-            返回列表页
-        </a-button>
+        <el-button type="primary" @click="pull">保存方案</el-button>
+        <el-button type="danger"  @click="back">返回列表页</el-button>
         </a-form-item>
     </a-form>
     
@@ -87,7 +82,7 @@ export default {
               
           ]
       }
-      ,UTL:'http://localhost:8080/autotest'
+      ,UTL:'http://192.168.4.221:8080/autotest'
     };
   },
   computed: {
@@ -142,8 +137,14 @@ export default {
         axios.post(this.UTL+'/Kt/insertDevice',this.msg).then((data)=>{
             console.log(data)
             if(data.status===200){
-                alert('新增成功')
+                // alert('新增成功')
+                this.$message({
+                      message: '数据新增成功',
+                      type: 'success'
+                    });
                  this.$router.push('/Kt__list')
+            }else{
+              this.$message.error('数据新增失败');
             }
             
             

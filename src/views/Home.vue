@@ -2,8 +2,9 @@
   <div>
     <h1 style="text-align:center">黑体辐射源智能校准系统方案配置系统</h1>
 
-    <a-button class="editable-add-btn" @click="handleAdd">添加新方案</a-button>
-    <a-button class="editable-add-btn" @click="back">返回</a-button>
+    
+    <el-button class="editable-add-btn" @click="back" type="warning">返回</el-button>
+     <el-button class="editable-add-btn" @click="handleAdd" type="primary">添加新方案</el-button>
 
     <a-table bordered :dataSource="data" :columns="columns">
       <template slot="name" slot-scope="text, record">
@@ -40,7 +41,9 @@
     },
     data() {
       return {
-        URL:"http://192.168.4.77:8080/autotest",
+        URL:"http://192.168.4.221:8080/autotest",
+        getall:'',
+        delplan:'',
         data: [
           
         ],
@@ -76,15 +79,16 @@
             dataIndex: 'testinterval',
           },
           {
-            title: '操作',
-            dataIndex: 'operation',
-            scopedSlots: { customRender: 'operation' },
-          },
-          {
             title: '详情',
             dataIndex: 'chack',
             scopedSlots: { customRender: 'chack' },
           },
+          {
+            title: '操作',
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
+          },
+          
         ],
       };
     },
@@ -100,11 +104,11 @@
       onDelete(key) {
         console.log(key.id)
         // 删除方案
-        axios.post(this.URL+'/plan/deleteById',key.id).then((data)=>{
+        axios.post(this.URL+this.delplan,{"id":key.id}).then((data)=>{
           console.log(data)
           if(data.status===200){
             // 删除成功后重新加载方案列表
-            axios.get(this.URL+'/plan/getAll').then((data)=>{
+            axios.get(this.URL+this.getall).then((data)=>{
             // console.log(data.data.data)
             this.data=data.data.data
         })
@@ -123,15 +127,24 @@
         this.$router.push({path:'/optionshow',query:{value:JSON.stringify(data)}})
       },
       back(){
+        // console.log(this)
         this.$router.push('/')
       }
     },
     mounted(){
       // 获取已设置方案列表
-        axios.get(this.URL+'/plan/getAll').then((data)=>{
+
+      console.log(this.$store.state.api)
+      this.delplan=this.$store.state.api.DeleteById
+      this.getall=this.$store.state.api.Plangetall
+      
+        axios.get(this.URL+this.getall).then((data)=>{
           console.log(data.data.data)
           this.data=data.data.data
         })
+    },
+    beforeMount(){
+      
     }
   };
 </script>

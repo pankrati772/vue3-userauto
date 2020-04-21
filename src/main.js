@@ -14,7 +14,10 @@ import notification from 'ant-design-vue/lib/notification'
 import Table from 'ant-design-vue/lib/table'
 import popconfirm from 'ant-design-vue/lib/popconfirm'
 import 'ant-design-vue/dist/antd.css';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 Vue.config.productionTip = false;
+Vue.use(ElementUI);
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(List)
